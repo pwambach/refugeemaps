@@ -5,6 +5,7 @@ import Loading from './views/loading';
 import Error from './views/error';
 import Actions from './views/actions';
 import Filters from './views/filters';
+import SuggestHotspot from './views/suggest';
 import Infowindow from './views/infowindow';
 import Menu from './views/menu';
 
@@ -16,6 +17,7 @@ class App {
     this.infowindow = new Infowindow();
     this.loading = new Loading();
     this.error = new Error();
+    this.suggestHotspot = new SuggestHotspot();
     this.map = new Map({
       onHotspotClick: hotspot => this.infowindow.show(hotspot)
     });
@@ -28,7 +30,8 @@ class App {
     this.actions = new Actions({
       onMenuToggle: () => this.menu.toggle(),
       onFiltersToggle: () => this.filters.toggle(),
-      onUserLocationSuccess: position => this.map.showUserPosition(position)
+      onUserLocationSuccess: position => this.map.showUserPosition(position),
+      onSuggestHotspot: position => this.suggestHotspot.toggle(),
     });
 
     getHotspots()
