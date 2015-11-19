@@ -24,6 +24,10 @@
       vertical-align: middle
       fill: $color-grey
     &--with-image
+      max-width: 300px
+      text-overflow: ellipsis
+      overflow: hidden
+      display: inline-block
       font-size: emCalc(16)
       font-weight: 400
       padding: 0 emCalc(16px)
@@ -37,13 +41,13 @@
         bottom: 0
         border-top: 1px solid $color-grey-light
         transition: left .2s ease-in-out
-
     &__image
       vertical-align: middle
       width: emCalc(30px)
     &__text
       margin-left: emCalc(26px)
       vertical-align: middle
+
     &--rtl
       direction: rtl
   &--rtl

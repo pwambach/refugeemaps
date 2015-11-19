@@ -5,6 +5,7 @@
     "mocha": true
   },
   "globals": {
+    "google": false
   },
   "ecmaFeatures": {
     "arrowFunctions": true,

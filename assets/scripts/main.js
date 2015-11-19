@@ -35,6 +35,7 @@ class App {
       onSuggestedLocationSuccess: position => {
         this.suggestHotspot.toggle();
         this.loading.hide();
+        this.suggestHotspot.getLocationsNearby(position, this.map.mapCanvas);
       },
       onSuggestedLocationError: () => {
         console.log("Cannot find user location.");
