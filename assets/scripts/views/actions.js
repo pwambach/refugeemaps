@@ -67,6 +67,7 @@ export default class {
 
   /**
    * Suggest new Hotspot (at current location, using client info).
+   * @todo Not flexible enough i.e. if you want to tap to choose a spot.
    */
   suggestNewHotspot() {
     this.onSuggestHotspot();
