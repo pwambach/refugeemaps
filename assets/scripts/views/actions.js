@@ -48,8 +48,8 @@ export default class {
 
   /**
    * Get the user location, where
-   *  successHandler  takes userPosition as arguments
-   *  errorHandler    takes no arguments
+   * @param {function} successHandler cb with userPosition{lat,lng} as argument
+   * @param {function} errorHandler   cb no args, called when no loc determined
    */
   getUserLocation(successHandler, errorHandler) {
     navigator.geolocation.getCurrentPosition(position => {
