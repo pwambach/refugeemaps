@@ -15,4 +15,11 @@ export default class {
   hide() {
     this.$container.classList.add('overlay--hidden');
   }
+
+  /**
+   * Show loading indicator after it was hidden via `hide()`
+   */
+  show() {
+    this.$container.classList.remove('overlay--hidden');
+  }
 }

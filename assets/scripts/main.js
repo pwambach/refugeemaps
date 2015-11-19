@@ -31,7 +31,15 @@ class App {
       onMenuToggle: () => this.menu.toggle(),
       onFiltersToggle: () => this.filters.toggle(),
       onUserLocationSuccess: position => this.map.showUserPosition(position),
-      onSuggestHotspot: position => this.suggestHotspot.toggle(),
+      onSuggestHotspot: () => this.loading.show(),
+      onSuggestedLocationSuccess: position => {
+        this.suggestHotspot.toggle();
+        this.loading.hide();
+      },
+      onSuggestedLocationError: () => {
+        console.log("Cannot find user location.");
+        this.loading.hide();
+      }
     });
 
     getHotspots()

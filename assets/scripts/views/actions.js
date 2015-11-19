@@ -10,13 +10,16 @@ export default class {
     onFiltersToggle = () => {},
     onUserLocationSuccess = () => {},
     onUserLocationError = () => {},
-    onSuggestHotspot = () => {}
+    onSuggestHotspot = () => {},
+    onSuggestedLocationSuccess = () => {},
+    onSuggestedLocationError = () => {},
   }) {
     this.$container = document.querySelector('.actions');
     this.$menuToggle = document.querySelector('.menu-toggle');
     this.$center = this.$container.querySelector('.center');
     this.$filtersToggle = this.$container.querySelector('.filters-toggle');
-    this.$suggestHotspot = this.$container.querySelector('.suggest-hotspot-button');
+    this.$suggestHotspot = this.$container
+      .querySelector('.suggest-hotspot-button');
 
     if (!navigator.geolocation) {
       this.$center.remove();
@@ -26,13 +29,17 @@ export default class {
     this.onUserLocationSuccess = onUserLocationSuccess;
     this.onUserLocationError = onUserLocationError;
     this.onSuggestHotspot = onSuggestHotspot;
+    this.onSuggestedLocationSuccess = onSuggestedLocationSuccess;
 
     if (this.$center) {
-      this.$center.addEventListener('click', () => this.getUserLocation(this.onUserLocationSuccess));
+      this.$center.addEventListener('click', () => this.getUserLocation(
+          this.onUserLocationSuccess,
+          this.onUserLocationError));
     }
 
     if (this.$suggestHotspot) {
-      this.$suggestHotspot.addEventListener('click', () => this.getUserLocation(this.onSuggestHotspot));
+      this.$suggestHotspot.addEventListener('click', () =>
+        this.suggestNewHotspot());
     }
 
     this.$filtersToggle.addEventListener('click', () => onFiltersToggle());
@@ -40,20 +47,32 @@ export default class {
   }
 
   /**
-   * Get the user location
+   * Get the user location, where
+   *  successHandler  takes userPosition as arguments
+   *  errorHandler    takes no arguments
    */
-  getUserLocation(userLocationHandler) {
+  getUserLocation(successHandler, errorHandler) {
     navigator.geolocation.getCurrentPosition(position => {
       const userPosition = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
       };
 
-      userLocationHandler(userPosition);
+      successHandler(userPosition);
     }, () => {
       console.error('There was an error retrieving the geolocation…');
-      this.onUserLocationError();
+      errorHandler();
     });
+  }
+
+  /**
+   * Suggest new Hotspot (at current location, using client info).
+   */
+  suggestNewHotspot() {
+    this.onSuggestHotspot();
+    this.getUserLocation(
+      this.onSuggestedLocationSuccess,
+      this.onSuggestedLocationError);
   }
 
   /**
